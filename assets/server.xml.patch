@@ -1,0 +1,6 @@
+51a52,56
+>   <Context path="/art-decor" docBase="art-decor.war" reloadable="false" override="true" crossContext="true">
+>     <Parameter override="false" name="oxf.resources.priority.0" value="org.orbeon.oxf.resources.FilesystemResourceManagerFactory"/>
+>     <Parameter override="false" name="oxf.resources.priority.0.oxf.resources.filesystem.sandbox-directory" value="/resources"/>
+>   </Context>
+>   

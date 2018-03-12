@@ -1,0 +1,5 @@
+<settings>
+  <repository>http://decor.nictiz.nl/apps/public-repo</repository>
+<!--    <repository>http://demo.exist-db.org/exist/apps/public-repo</repository> -->
+<!--    <repository>http://localhost:8080/exist/apps/public-repo</repository>-->
+</settings>
