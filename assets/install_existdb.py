@@ -8,6 +8,9 @@ import os
 from subprocess import *
 import time
 
+EXIST_DIR = '/usr/local/exist_atp_2.2'
+EXIST_PASSWORD = 'password'
+
 print('-' * 80)
 print('Welcome to the eXist-db installer!')
 print('-' * 80)
@@ -45,12 +48,12 @@ p = Popen(
 )
 
 prompts = [
-    ('Select target path [{}]'.format(dirname), '/usr/local/exist_atp_2.2'),
+    ('Select target path [{}]'.format(dirname), EXIST_DIR),
     ('press 1 to continue, 2 to quit, 3 to redisplay', '1'),
     ('Data dir:  [webapp/WEB-INF/data]', 'webapp/WEB-INF/data'),
     ('press 1 to continue, 2 to quit, 3 to redisplay', '1'),
-    ('Enter password:  []', 'password'),
-    ('Enter password:  [password]', ''),
+    ('Enter password:  []', EXIST_PASSWORD),
+    ('Enter password:  [{}]'.format(EXIST_PASSWORD), ''),
     ('Maximum memory in mb: [1024]', '1024'),
     ('Cache memory in mb: [128]', '128'),
     ('press 1 to continue, 2 to quit, 3 to redisplay', '1'),
