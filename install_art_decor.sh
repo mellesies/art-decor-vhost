@@ -26,8 +26,9 @@ cp $ASSETS/debian-jessie.list /etc/apt/sources.list.d/
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
 apt-get update
-apt-get install -y --allow-unauthenticated oracle-java8-installer oracle-java8-set-default tomcat7
+apt-get install -y --allow-unauthenticated oracle-java8-installer oracle-java8-set-default
 apt-get install -y sudo vim curl patch python wget
+apt-get install -y tomcat7
 
 
 # Download eXist-db
@@ -40,13 +41,14 @@ fi
 BASE_URL="http://decor.nictiz.nl/apps/public-repo/public/"
 
 # Order is important!
-PACKAGES=(
-  "ART-1.8.58.xar"
-  "DECOR-core-1.8.42.xar"
-  "DECOR-services-1.8.35.xar"
-  "ART-DECOR-system-services-1.8.23.xar"
-  "terminology-1.8.36.xar"
-)
+# PACKAGES=(
+#   "ART-1.8.60.xar"
+#   "DECOR-core-1.8.45.xar"
+#   "DECOR-services-1.8.35.xar"
+#   "ART-DECOR-system-services-1.8.23.xar"
+#   "terminology-1.8.37.xar"
+# )
+PACKAGES=($($ASSETS/find_art_packages.py))
     
 mkdir -p $ASSETS/exist-packages
 for i in "${PACKAGES[@]}"
@@ -80,7 +82,7 @@ echo "Installing the ART-DECOR web archive into tomcat."
 mv $ASSETS/art-decor.war $TOMCAT_HOME/webapps
 
 # Start tomcat so it automatically unpacks art-deor.war
-service tomcat7 start
+service tomcat7 restart
 
 # replace localhost with host specified above.
 sed -i 's/localhost/'"$EXIST_HOST"'/' $TOMCAT_HOME/webapps/art-decor/WEB-INF/resources/config/properties-local.xml 
@@ -112,13 +114,6 @@ curl -v -u admin:password --upload-file $ASSETS/configuration.xml http://localho
 echo "Uploading xquery script to install packages via http GET"
 curl -u admin:password --upload-file $ASSETS/install_exist_pkg.xquery http://localhost:8877/rest/db/system/install/
 
-PACKAGES=(
-  "ART-1.8.58.xar"
-  "DECOR-core-1.8.42.xar"
-  "DECOR-services-1.8.35.xar"
-  "ART-DECOR-system-services-1.8.23.xar"
-  "terminology-1.8.36.xar"
-)
 
 for i in "${PACKAGES[@]}"
 do
